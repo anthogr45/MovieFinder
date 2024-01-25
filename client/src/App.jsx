@@ -1,15 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/NavTabs';
 import Footer from './components/Footer';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
-// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-// const client = new ApolloClient({
-//   uri: '/graphql',
-//   cache: new InMemoryCache(),
-// });
+import { setContext } from '@apollo/client/link/context';
+
 
 import {
   ApolloClient,
@@ -41,11 +38,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-
-
-// function App() {
-  // const [showLoginForm, setShowLoginForm] = useState(false);
-  // const [showSignupForm, setShowSignupForm] = useState(false);
+const App = () => {
+  // function App() {
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showSignupForm, setShowSignupForm] = useState(false);
 
   const openLoginForm = () => {
     setShowLoginForm(true);
@@ -62,7 +58,6 @@ const client = new ApolloClient({
     setShowSignupForm(false);
   };
 
-const App = () => {
   return (
     <ApolloProvider client={client}>
       <Nav />
