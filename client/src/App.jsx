@@ -4,12 +4,12 @@ import Nav from './components/NavTabs';
 import Footer from './components/Footer';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+// import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const client = new ApolloClient({
-  uri: '/graphql',
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   uri: '/graphql',
+//   cache: new InMemoryCache(),
+// });
 
 import {
   ApolloClient,
@@ -44,8 +44,8 @@ const client = new ApolloClient({
 
 
 // function App() {
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [showSignupForm, setShowSignupForm] = useState(false);
+  // const [showLoginForm, setShowLoginForm] = useState(false);
+  // const [showSignupForm, setShowSignupForm] = useState(false);
 
   const openLoginForm = () => {
     setShowLoginForm(true);
