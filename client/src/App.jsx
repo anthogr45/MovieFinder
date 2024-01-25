@@ -6,10 +6,10 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const client = new ApolloClient({
-  uri: '/graphql',
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   uri: '/graphql',
+//   cache: new InMemoryCache(),
+// });
 
 import {
   ApolloClient,
