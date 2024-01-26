@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet} from 'react-router-dom';
 import Nav from './components/NavTabs';
 import Footer from './components/Footer';
 
 
 import { setContext } from '@apollo/client/link/context';
+import {FavoriteMoviesProvider} from './pages/favMovie';
 
 
 import {
@@ -42,6 +43,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
+      <FavoriteMoviesProvider>
       <Nav />
      
       <main className="mx-3">
@@ -49,6 +51,7 @@ const App = () => {
         <Outlet />
         
       </main>
+      </FavoriteMoviesProvider>
       
       <Footer />
     </ApolloProvider>
