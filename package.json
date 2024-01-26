@@ -21,9 +21,13 @@
     "concurrently": "^8.2.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "dotenv": "^16.4.1",
+=======
+
+>>>>>>> origin/anthony
     "react-responsive-masonry": "^2.1.7"
   }
 }
