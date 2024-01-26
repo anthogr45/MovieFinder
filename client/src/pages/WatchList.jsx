@@ -1,4 +1,6 @@
 import React from 'react';
+import { Grid, Container } from '@mui/material';
+import MovieCard from '../components/MovieCard';
 
 const WatchList = () => {
   return (

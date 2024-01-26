@@ -102,7 +102,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');    
     },
 
-    editMovie: async (parent, { movieId }, context) => {
+    editFavMovie: async (parent, { movieId }, context) => {
       if (context.user){
         const user = User.findOneAndUpdate(
           { _id: context.user._id },
@@ -114,7 +114,20 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');    
     },
+
+    addFavMovie: async (parent, { movieId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { favorite_movies: movieId } },
+          { new: true }
+        );
+        return user;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
+
 };
 
 module.exports = resolvers;

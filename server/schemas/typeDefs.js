@@ -55,7 +55,8 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addMovie(id: Int!): Movie
     removeMovie(_id: ID!): Movie
-    editMovie(_id: ID!): User
+    editFavMovie(_id: ID!): User
+    addFavMovie(_id: ID!): User
   }
 `;
 

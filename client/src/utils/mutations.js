@@ -25,9 +25,18 @@ export const LOGIN_USER = gql`
   }
 `;
 
-export const EDIT_MOVIE = gql`
-  mutation EditMovie($movieId: ID!) {
-    editMovie(movieId: $movieId) {
+export const EDIT_Fav_MOVIE = gql`
+  mutation editFavMovie($movieId: ID!) {
+    editFavMovie(movieId: $movieId) {
+      _id
+      favorite_movies
+    }
+  }
+`;
+
+export const ADD_Fav_MOVIE = gql`
+  mutation addFavMovie($movieId: ID!) {
+    addFavMovie(movieId: $movieId) {
       _id
       favorite_movies
     }
