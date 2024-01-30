@@ -1,69 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
+
+import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
+import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Auth from '../utils/auth';
+
 import { useFavoriteMovies } from '../utils/FavoriteMoviesContext';
 
-const MovieCard = ({ movie }) => {
-  const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : '/No_image_available.png';
-  const { isFav, addFavoriteMovie, removeFavoriteMovie } = useFavoriteMovies();
-  const [favBtnColor, setfavBtnColor] = useState(isFav(movie) ? '#98002e' : '');
+export default function MovieCard({movie}) {
+  const [isFav, setIsFav] = useState(false);
+
+  // about movie image, please ref: https://developer.themoviedb.org/docs/image-basics
+  const imageUrl = movie.poster_path?`https://image.tmdb.org/t/p/w500/${movie.poster_path}`:`/No_image_available.png`;
+  const { favoriteMovies, addFavoriteMovie, removeFavoriteMovie } = useFavoriteMovies();
 
   useEffect(() => {
-    setfavBtnColor(isFav(movie) ? '#98002e' : '');
-  }, [movie, isFav]);
+    // console.log("MovieCard",favoriteMovies, movie);
+    setIsFav(favoriteMovies.some((m)=> m.id === movie.id));
+  }, [favoriteMovies, movie]);
 
-  const toggleFav = async () => {
+  const onToggleFav = async (movie) => {
     if (Auth.loggedIn()) {
-      if (isFav(movie)) {
-        const success = await removeFavoriteMovie(movie);
-        if (success) setfavBtnColor('');
-      } else {
-        const success = await addFavoriteMovie(movie);
-        if (success) setfavBtnColor('#98002e');
-      }
+      isFav? await removeFavoriteMovie(movie): await addFavoriteMovie(movie);
+      setIsFav(!isFav);
     } else {
-      alert('Login first!');
+      alert("Please Login first!");
     }
-  };
+  }
 
   return (
-    <Stack sx={{ margin: '20px' }}>
-      <Card sx={{ maxWidth: 400, maxHeight: 600, height: '100%', position: 'relative' }}>
-        <Link to={`/movie/${movie.id}`}>
+    <Stack sx={{ margin:2}}>
+        <Card sx={{ maxWidth: 345, maxHeight:400 }}>
+          <Link to={`/movie/${movie.id}`}>
           <CardMedia
             component="img"
-            height="400"
+            height="194"
             image={imageUrl}
             alt={movie.title}
-            sx={{
-              '&:hover': {
-                opacity: 0.8,
-                transition: 'opacity 0.3s ease-in-out',
-              },
-            }}
           />
-        </Link>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            {movie.title}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={toggleFav}>
-            <FavoriteIcon sx={{ color: favBtnColor }} />
-          </IconButton>
-        </CardActions>
-      </Card>
+          <CardContent>
+              <Typography variant="h6" gutterBottom>
+                    {movie.title}
+              </Typography>
+          </CardContent>
+          </Link>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites" onClick={()=>onToggleFav(movie)}>
+              <FavoriteIcon sx={{color: isFav? '#98002e' : ''}}/>
+            </IconButton>
+          </CardActions>
+        </Card>
     </Stack>
   );
-};
-
-export default MovieCard;
+}
