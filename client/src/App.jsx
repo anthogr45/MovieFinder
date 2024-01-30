@@ -1,10 +1,10 @@
+// App.jsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from './components/NavTabs';
 import Footer from './components/Footer';
 import { setContext } from '@apollo/client/link/context';
 import FavoriteMoviesProvider from './utils/FavoriteMoviesContext';
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -35,17 +35,16 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <FavoriteMoviesProvider>
-      <Nav />
-      
-      {/* Use a wrapper div with margin for Outlet */}
-      <div style={{ margin: '0 16px 20px' }}>
-        <Outlet />
-      </div>
-      
-      <Footer />
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Nav />
+          <div style={{ flex: 1, margin: '0 16px 20px' }}>
+            <Outlet />
+          </div>
+          <Footer />
+        </div>
       </FavoriteMoviesProvider>
     </ApolloProvider>
   );
-}
+};
 
 export default App;
