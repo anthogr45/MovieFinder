@@ -50,17 +50,17 @@ export default function MovieDetail() {
 
 	const toggleFav = async () => {
 		if (Auth.loggedIn()) {
-			if (isFav(movie.id)) {
+			if (isFav(movie)) {
 				console.log("remove")
-				const success = await removeFavoriteMovie(movie.id);
+				const success = await removeFavoriteMovie(movie);
 				if (success) setfavBtnColor('');
 			} else {
 				console.log("add")
-				const success = await addFavoriteMovie(movie.id);
+				const success = await addFavoriteMovie(movie);
 				if (success) setfavBtnColor('#98002e');
 			}
 		} else {
-			alert("Login first.");
+			alert("login first!");
 		}
 		
 	};
@@ -96,7 +96,7 @@ export default function MovieDetail() {
 						</Box>
 						<Box>
 							<Typography variant="h6">Now Streaming at</Typography>
-							{movie.providers.map((provider) => <Provider providerLogo={provider.logo_path} key={provider.provider_id} />)}
+							{movie.providers && movie.providers.map((provider) => <Provider providerLogo={provider.logo_path} key={provider.provider_id} />)}
 						</Box>
 					</Stack>
 				</Stack>
