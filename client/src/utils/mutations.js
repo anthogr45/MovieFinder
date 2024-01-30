@@ -47,7 +47,7 @@ const MovieFragment = gql`
 
 export const ADD_FAV_MOVIE = gql`
   mutation addFavMovie($movieId: String!) {
-    addFavMovie(movieId: $movieId) {
+    addFavMovie(id: $movieId) {
         success
         message
         user {
@@ -63,7 +63,7 @@ export const ADD_FAV_MOVIE = gql`
 
 export const REMOVE_FAV_MOVIE = gql`
   mutation removeFavMovie($movieId: String!) {
-    removeFavMovie(movieId: $movieId) {
+    removeFavMovie(id: $movieId) {
         success
         message
         user {

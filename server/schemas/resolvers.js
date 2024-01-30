@@ -142,27 +142,27 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');    
     },
 
-    addFavMovie: async (parent, { movieId }, context) => {
+    addFavMovie: async (parent, { id }, context) => {
       // add movie obj to user favorite_movies
       // first check if movie data in local DB or need get from API
       if (context.user) {
-        const isLocal = await isMovieLocal(movieId);
+        const isLocal = await isMovieLocal(id);
         let movie = {};
         if (isLocal) {
-          console.log(`return movie ID: ${movieId} from local DB`)
+          console.log(`return movie ID: ${id} from local DB`)
         } else {
           // get data from API, save the movie data to local DB
-          const m = await getMovieDetailFromAPI(movieId);
-          const isLocal = await isMovieLocal(movieId);
+          const m = await getMovieDetailFromAPI(id);
+          const isLocal = await isMovieLocal(id);
           if (!isLocal) {
             await saveMovie(m);
           }
-          console.log(`return movie ID: ${movieId} from API`)
+          console.log(`return movie ID: ${id} from API`)
         }
 
         const user = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { favorite_movies: movieId } },
+          { $addToSet: { favorite_movies: id } },
           { new: true }
         );
 
@@ -170,18 +170,18 @@ const resolvers = {
           sucess: true, 
           message: "sucess add movie to fav",
           user: user,
-          movieId: movieId}
+          movieId: id}
 
       } else {
         throw new AuthenticationError('You need to be logged in!');
       }
     },
 
-    removeFavMovie: async (parent, { movieId }, context) => {
+    removeFavMovie: async (parent, { id }, context) => {
       if (context.user){
         const updateUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { favorite_movies: movieId  } },
+          { $pull: { favorite_movies: id  } },
           { new: true}
         );
 
@@ -189,7 +189,7 @@ const resolvers = {
           sucess: true, 
           message: "sucess add movie to fav",
           user: updateUser,
-          movieId: movieId} 
+          movieId: id} 
       } else {
         throw new AuthenticationError('You need to be logged in!');
       }
