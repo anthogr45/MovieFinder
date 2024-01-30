@@ -19,6 +19,7 @@ export default async function searchMovie(keywords) {
 				const idStr = m.id.toString();
 				const movie = {
 					...m,
+					__typename: "Movie",
 					id: idStr
 				}
 				movies.push(movie);
