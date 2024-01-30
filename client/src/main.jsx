@@ -12,7 +12,7 @@ import MovieSearchResult from './pages/MovieSearchResult';
 import MovieDetail from './pages/MovieDetail.jsx';
 
 import ButtonAppBar from './components/NavTabs.jsx';
-import Footer from './components/Footer.jsx'; // Import the Footer component
+import Footer from './components/Footer.jsx'; 
 
 
 const theme = createTheme({
