@@ -3,7 +3,7 @@ const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
+    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2UzOGQ1YWRhYTk3ZmE3NjZhNTdhYjIxODU1MTlhYiIsInN1YiI6IjY1MDhmMzdkOGE4OGIyMDExZGIyZTU2OSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0DTCFcXGEMNIaRBmzqu6Xt519jEtXPfXFURIRlK1N_g`
   }
 };
 
@@ -14,16 +14,20 @@ export default async function searchMovie(keywords) {
 	try {
 		const response = await fetch(url, options);
 		const searchResults = await response.json();
-		
-		if (!searchResults) return movies;
-		for (let m of searchResults.results) {
-			const idStr = m.id.toString();
-			const movie = {
-				...m,
-				id: idStr
+		if (response.ok){
+			for (let m of searchResults.results) {
+				const idStr = m.id.toString();
+				const movie = {
+					...m,
+					__typename: "Movie",
+					id: idStr
+				}
+				movies.push(movie);
 			}
-			movies.push(movie);
+		} else {
+			console.log("fetch error: ",response);
 		}
+		
 
 		// let total_pages = searchResults.total_pages;
 		// if (searchResults.total_pages > 5) {

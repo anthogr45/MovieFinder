@@ -17,10 +17,12 @@ module.exports = async function getProvidersInfo(movieId) {
     const response = await fetch(url, options);
     const searchResults = await response.json();
     
-    if (!searchResults) return providers;
+    if (!response.ok) return providers;
 
-    providers.push(...searchResults.results.CA.flatrate);
-
+    if (searchResults.results.CA.flatrate) {
+      providers.push(...searchResults.results.CA.flatrate);
+    }
+    
     return providers;
   } catch (error) {
     console.error('Error fetching movie IDs:', error);
